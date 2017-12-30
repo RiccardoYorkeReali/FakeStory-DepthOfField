@@ -23,6 +23,9 @@ The Depth of Field effect has been implemented by a fragment shader.
 - Camera
 - Controls (Pointer Lock Controls, provided by three.js)
 #### Load the objects on the Scene
+![toystorypresentazione 009](https://user-images.githubusercontent.com/29773493/34455030-6d9cdc94-ed76-11e7-8a0a-084e45d1e319.jpeg)
+![toystorypresentazione 010](https://user-images.githubusercontent.com/29773493/34455035-84d3d9da-ed76-11e7-9961-c6da9c24a564.jpeg)
+
 - Light and Chandelier
 - Room
 - Dices
@@ -30,3 +33,28 @@ The Depth of Field effect has been implemented by a fragment shader.
 - Bed
 - Woody
 - Buzz Lightyear
+#### Collision Detection
+To detect room walls and bed, so that the user can't pass through them
+#### Application of Depth of Field Effect
+#### Audio Files & GUI
+- 'Hai un amico in me' - Riccardo Cocciante, from Toy Story Soundtrack
+- GUI that let the user change *Aperture* and *Plane in Focus*
+
+## How Depth of Field is Implemented?
+- **Step 1.** Implement a routine that let apply external GLSL shaders to a three.js scene.
+- **Step 2.** Implement the fragment shader that simulates the DoF effect.
+
+### Step 1 - Rendering to Texture
+To apply a fragment shader to a three.js scene, Render to Texture technique has been used. The scene has been processed separately from what the user truly see. Once this scene has been rendered, it is displayed in a texture consisting of a fixed plane (rendered too). Thus, the user can see the Toy Story scene with Depth of Field applied, on this plane.
+
+### Step 2 - Depth of Field Shader
+To simulate the Depth of Field, it is only necessary to change the value of color's pixels. The vertex shader does not have to do anything:
+```html
+  <script type="x-shader/x-vertex" id="DOFVertexShader">
+     varying vec2 vUv;
+     void main(){
+         vUv = uv;
+         gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+     }
+</script>
+```
